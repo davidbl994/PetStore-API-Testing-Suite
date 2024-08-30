@@ -33,3 +33,15 @@ def test_update_pet_details(pet_api, pet_data):
     assert updated_pet_data['name'] == "Updated Name", f"Expected name to be 'Updated Name', got {updated_pet_data['name']}"
     assert updated_pet_data['status'] == "sold", f"Expected status to be sold, got {updated_pet_data['status']}"
     logger.info("Pet details updated successfully via POST")
+
+def test_update_non_existent_pet(pet_api, non_existent_pet_data):
+    logger.info(f"Attempting to update a non-existent pet with ID: {non_existent_pet_data['id']}")
+
+    response = pet_api.update_pet(non_existent_pet_data)
+    assert response.status_code == 404, f"Expected status code 404, got {response.status_code}"
+    logger.info("Status code is 404 as expected")
+
+    response_json = response.json()
+    assert "message" in response_json, "Response JSON does not contain 'message'"
+    assert response_json["message"] == "Pet not found", f"Expected message 'Pet not found', got {response_json.get('message')}"
+    logger.info("Received expected 'Pet not found' message")
