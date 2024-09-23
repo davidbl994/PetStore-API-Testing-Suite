@@ -8,8 +8,8 @@ def test_get_pet_invalid_id(pet_api, invalid_pet_data):
     logger.info(f"Attempting to fetch pet with invalid ID format: {pet_id}")
     response = pet_api.get_pet(pet_id)
 
-    assert response.status_code == 404, f"Expected status code 400, got {response.status_code}"
-    logger.info("Status code is 400 as expected")
+    assert response.status_code == 404, f"Expected status code 404, got {response.status_code}"
+    logger.info("Status code is 404 as expected")
 
     response_json = response.json()
     assert "message" in response_json, "Response JSON does not contain 'message'"
